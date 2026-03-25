@@ -118,3 +118,124 @@ git clone <url-do-repositorio>
 ```bash
 Main.java
 ```
+
+
+
+**🇺🇸**
+# 🤖 Interactive Totem – Mars Exploration Robots Museum
+
+## 📌 About the Project
+
+This project consists of developing an **interactive totem** for a multi-themed museum, focused on an exhibition about **robot explorers on planet Mars**.
+
+The application will be built in **Java**, using **JDialog** for the graphical interface, aiming to enhance the visitor experience by allowing them to:
+
+- View exhibition artworks 🖼️  
+- Access information about each item 📖  
+- Answer an interactive questionnaire 📊  
+- View results in real time 📈  
+
+---
+
+## 🎯 General Objective
+
+Develop a system that simulates an **interactive digital totem**, assisting visitors in navigating and understanding the artworks displayed in the museum.
+
+---
+
+## 🎯 Specific Objectives
+
+- Identify user needs and translate them into practical solutions  
+- Apply concepts of computer system development  
+- Use best practices of **Object-Oriented Programming (OOP)**  
+- Encourage teamwork and integration of knowledge  
+
+---
+
+## 🧠 Application Context
+
+The application simulates a scenario where a non-profit organization creates a museum with the theme:
+
+> 🤖 **Mars Exploration Robots**
+
+Within this environment, visitors will be able to interact with a digital totem to:
+
+- Explore artworks (images) related to the theme  
+- Read descriptions and historical context of each piece  
+- Participate in a survey about the exhibition  
+
+---
+
+## ⚙️ System Features
+
+### 🖼️ Artwork Exhibition
+- Display of at least **10 images**
+- Each artwork contains:
+  - Title  
+  - Description  
+  - Historical context  
+
+---
+
+### 📊 Interactive Questionnaire
+- Questionnaire with **5 multiple-choice questions**
+- At the end, the system displays:
+  - Consolidated results of responses  
+
+---
+
+### 📈 Data Processing
+- Responses are stored in **dynamic data structures (arrays/lists)**
+- The system performs calculations to:
+  - Generate statistics  
+  - Support decision-making (continuation or closure of the exhibition)
+
+> ⚠️ **Important:**  
+> Data is **not persisted to disk** (stored in memory only).
+
+---
+
+### 🔒 Privacy (LGPD Compliance)
+- The system **does not collect sensitive data**
+- No personal visitor information is stored  
+
+---
+
+### 🖥️ Interface and Usability
+- Interface developed using **JDialog (required)**  
+- Designed for **touchscreen use**
+- Includes:
+  - ⌨️ **Custom virtual keyboard (inside the application)**  
+  - No use of the operating system’s native keyboard  
+
+---
+
+## 🧱 Project Architecture (OOP)
+
+The system follows the **Object-Oriented Programming** paradigm and includes:
+
+- Best practices using **constructors**  
+- **Encapsulation** between class responsibilities  
+- Organized structure using folders and packages  
+
+---
+
+## 🛠️ Technologies Used
+
+- **Java**
+- **Swing (JDialog)**
+- **OOP (Object-Oriented Programming)**
+
+---
+
+## 🚀 Running the Project
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+```
+2.Open it in a Java IDE (IntelliJ, Eclipse, or NetBeans)
+3.Run the main class:
+```bash
+Main.java
+```
