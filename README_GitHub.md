@@ -76,7 +76,7 @@ docs: atualizar README
 git push origin feature/nome-da-sua-feature
 ```
 
-##🔀 7. Criando um Pull Request
+## 🔀 7. Criando um Pull Request
 Acesse o repositório no GitHub
 Clique em Compare & Pull Request
 Adicione uma descrição do que foi feito
