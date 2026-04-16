@@ -1,3 +1,4 @@
+**🇧🇷** 
 # 📌 Projeto: Totem Interativo de Exposição
 
 Este repositório contém a organização e os requisitos para o desenvolvimento de um sistema de totem interativo para uma exposição.
@@ -98,5 +99,111 @@ Define o estilo visual da apresentação das obras e o design das telas.
 
 - Listagem de todas as fontes utilizadas  
 - Inclusão de materiais que não são de autoria própria  
+
+---
+---
+---
+
+**🇺🇸**
+# 📌 Project: Interactive Exhibition Totem
+
+This repository contains the organization and requirements for developing an interactive exhibition totem system.
+
+---
+
+## 🧠 Class Diagram
+
+Responsible for organizing the system flow, ensuring that everyone follows the same logical structure.
+
+### 💻 Classes (Java)
+- Definition of classes, methods, and objects in the system  
+- ⚠️ The class diagram must be completed before starting this stage  
+
+---
+
+## 🎨 Totem Layout
+
+Defines the visual style of the exhibition and screen design.
+
+### 🖥️ Screens/Forms (JDialog)
+- Creation of layouts and screen designs  
+- ⚠️ Layouts must be defined before starting  
+
+---
+
+## 🖼️ Exhibited Works + History
+
+- Define at least **10 artworks** for the exhibition  
+- Provide a brief history for each artwork  
+- 📊 Current status: **9 artworks already selected**
+
+### ❓ Questionnaire (5 Questions)
+- Questionnaire at the end of the exhibition  
+- ⚠️ Depends on the completion of the artworks  
+
+### 🧱 3D Models of the Artworks
+- 3D modeling of exhibited works  
+- 📊 Current status: **7 out of 9 models completed**
+
+### 🎮 Interactive Mini Games
+- Development of **3 mini games** for visitor interaction  
+
+---
+
+## 🐾 Exhibition Mascot
+
+- Virtual guide for the exhibition  
+- Provides curiosities and information  
+- 🎙️ Includes AI-generated voice  
+
+---
+
+## 🤖 AI Integrated into the Totem
+
+- Assists visitors with questions about the artworks  
+- Potential implementation of a trained AI based on the exhibition  
+
+---
+
+## ⭐ Satisfaction Evaluation
+
+- Visitor satisfaction system  
+- Rating scale:
+  - 0 to 5  
+  - or 0 to 5 stars  
+
+---
+
+## 📊 Final Report
+
+- Generates a report containing:
+  - Questionnaire results  
+  - Visitor satisfaction levels  
+
+### ⚠️ Rules:
+- Must not be stored on disk  
+- Must not contain personal visitor data  
+
+---
+
+## 🖥️ Totem Hardware
+
+- Definition of hardware components  
+- Cost-benefit analysis  
+- Ensure smooth performance without lag or freezing  
+
+---
+
+## 📚 Documentation
+
+- Compilation of research and texts from all team members  
+- Final formatting following **ABNT standards**  
+
+---
+
+## 🔗 References
+
+- List of all research sources  
+- Includes materials not authored by the team  
 
 ---
