@@ -1,8 +1,8 @@
 # Plano para TotemMultimídia
 
 ## Diagrama de Classes:
-###Organização do fluxo do sistema, para que todos sigam o mesmo raciocínio.
-	-Classes (Java): 
+## Organização do fluxo do sistema, para que todos sigam o mesmo raciocínio.
+	Classes (Java): 
 	Classes, métodos, objetos que compões o sistema. É preciso ter o diagrama de classes finalizado para iniciarmos essa etapa.
 
 -Layout do Totem:
