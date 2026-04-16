@@ -50,7 +50,7 @@ git pull origin dev
 git checkout -b feature/nome-da-sua-feature
 ```
 
-##✍️ 4. Fazendo Alterações
+## ✍️ 4. Fazendo Alterações
 
 Agora você pode editar o código normalmente na sua IDE:
 
