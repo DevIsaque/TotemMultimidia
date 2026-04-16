@@ -1,41 +1,102 @@
-# Plano para TotemMultimídia
+# 📌 Projeto: Totem Interativo de Exposição
 
-## Diagrama de Classes:
-### Organização do fluxo do sistema, para que todos sigam o mesmo raciocínio.
-Classes (Java): 
-Classes, métodos, objetos que compões o sistema. É preciso ter o diagrama de classes finalizado para iniciarmos essa etapa.
+Este repositório contém a organização e os requisitos para o desenvolvimento de um sistema de totem interativo para uma exposição.
 
--Layout do Totem:
-Estilo da apresentação das obras e design das telas.
-	-Telas/Formulários (JDiolog):
-	Layouts e designes de telas no JDiolog. É preciso ter os layouts já definidos para iniciarmos essa etapa.
+---
 
--Obras em exposição + Histórico:
-É preciso definir no mínimo 10 obras para exposição + um breve histórico de cada uma. Já possuímos 9 obras selecionadas.
-	-5 perguntas sobre a exposição:
-	Questionário com 5 perguntas ao final da exposição. É preciso finalizar as obras para podermos selecionar as perguntas.
-	-Modelo 3D das obras:
-	Modelo 3D das obras em exposição, conseguimos 7 modelos de 9.
-	-Mini games interativos:
-	São, por enquanto, 3 mini games para o visitante interagir com a exposição.
+## 🧠 Diagrama de Classes
 
--Mascote da exposição:
-O mascote irá guiar o visitante na exposição, trazendo curiosidades e informações. Ele possuirá uma voz gerada por IA.
+Responsável pela organização do fluxo do sistema, garantindo que todos sigam o mesmo raciocínio lógico.
 
--IA acoplada ao Totem:
-A IA auxiliará o visitante durante a exposição, caso ele possua alguma dúvida referente as obras. Será, se possível, uma IA treinada com a exposição.
+### 💻 Classes (Java)
+- Definição de classes, métodos e objetos do sistema  
+- ⚠️ É necessário ter o diagrama de classes finalizado antes de iniciar esta etapa  
 
--Avaliação de satisfação:
-Avaliação de 0 a 5 ou de 0 a 5 estrelas, referente a satisfação do visitante com a exposição.
+---
 
--Relatório Final:
-É necessário gerar um relatório final, referente ao resultados das respostas, satisfação dos visitantes. Esse relatório não pode ser armazenado em disco, nem conter informações dos visitantes.
+## 🎨 Layout do Totem
 
--Hardware do Totem:
-Peças que serão utilizadas para montar o Totem. É preciso analisar o custo e benefício das peças e quais são necessárias para que o sistema rode sem travamentos ou lentidão.
+Define o estilo visual da apresentação das obras e o design das telas.
 
--Documentação:
-Documentação do projeto, com os textos referente as pesquisas de cada integrante, para a montar o documento final na formatação ABNT.
+### 🖥️ Telas/Formulários (JDialog)
+- Criação de layouts e design das telas  
+- ⚠️ É necessário ter os layouts definidos antes de iniciar  
 
--Referências:
-Todas as referências de pesquisas feitas sobre o projeto e o que está sendo usado, que não é de autoria própria.
+---
+
+## 🖼️ Obras em Exposição + Histórico
+
+- Definir no mínimo **10 obras** para exposição  
+- Criar um breve histórico para cada obra  
+- 📊 Status atual: **9 obras já selecionadas**
+
+### ❓ Questionário (5 perguntas)
+- Questionário ao final da exposição  
+- ⚠️ Depende da finalização das obras  
+
+### 🧱 Modelos 3D das Obras
+- Modelagem 3D das obras expostas  
+- 📊 Status atual: **7 de 9 modelos concluídos**
+
+### 🎮 Mini Games Interativos
+- Desenvolvimento de **3 mini games** para interação dos visitantes  
+
+---
+
+## 🐾 Mascote da Exposição
+
+- Guia virtual da exposição  
+- Fornece curiosidades e informações  
+- 🎙️ Possui voz gerada por IA  
+
+---
+
+## 🤖 IA Acoplada ao Totem
+
+- Auxilia visitantes com dúvidas sobre as obras  
+- Possível implementação de IA treinada com base na exposição  
+
+---
+
+## ⭐ Avaliação de Satisfação
+
+- Sistema de avaliação do visitante  
+- Escala de:
+  - 0 a 5  
+  - ou 0 a 5 estrelas  
+
+---
+
+## 📊 Relatório Final
+
+- Geração de relatório com:
+  - Resultados das respostas  
+  - Nível de satisfação dos visitantes  
+
+### ⚠️ Regras:
+- Não pode ser armazenado em disco  
+- Não pode conter dados pessoais dos visitantes  
+
+---
+
+## 🖥️ Hardware do Totem
+
+- Definição das peças utilizadas  
+- Análise de custo-benefício  
+- Garantir desempenho sem travamentos ou lentidão  
+
+---
+
+## 📚 Documentação
+
+- Reunião dos textos e pesquisas dos integrantes  
+- Formatação final seguindo normas **ABNT**  
+
+---
+
+## 🔗 Referências
+
+- Listagem de todas as fontes utilizadas  
+- Inclusão de materiais que não são de autoria própria  
+
+---
