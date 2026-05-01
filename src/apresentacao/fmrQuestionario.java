@@ -15,12 +15,13 @@ public class fmrQuestionario extends JDialog {
 
     private JPanel barraProgresso;
     private JLabel lblNumero;
-    private JLabel lblPergunta;
+    private JTextArea txtPergunta;
     private JPanel painelOpcoes;
     private JButton[] botoesOpcao;
     private int opcaoSelecionada = -1;
     private JButton btnConfirmar;
     private JLabel lblFeedback;
+    private int larguraTextoOpcao;
 
     public fmrQuestionario(JFrame pai, Controle controle) {
         super(pai, true);
@@ -75,19 +76,26 @@ public class fmrQuestionario extends JDialog {
 
         JPanel cardPergunta = EstiloBase.criarCard();
         cardPergunta.setLayout(new BorderLayout());
-        int cw = Math.min(980, tela.width - 240);
-        cardPergunta.setBounds(cx - cw / 2, 176, cw, 138);
+        int cw = Math.min(1120, tela.width - 240);
+        larguraTextoOpcao = Math.max(300, ((cw - 18) / 2) - 72);
+        cardPergunta.setBounds(cx - cw / 2, 176, cw, 148);
 
-        lblPergunta = new JLabel("", SwingConstants.CENTER);
-        lblPergunta.setFont(EstiloBase.fontePoppins(30f));
-        lblPergunta.setForeground(EstiloBase.COR_TEXTO_PRIMARIO);
-        lblPergunta.setBorder(BorderFactory.createEmptyBorder(20, 28, 20, 28));
-        cardPergunta.add(lblPergunta, BorderLayout.CENTER);
+        txtPergunta = new JTextArea();
+        txtPergunta.setEditable(false);
+        txtPergunta.setFocusable(false);
+        txtPergunta.setOpaque(false);
+        txtPergunta.setLineWrap(true);
+        txtPergunta.setWrapStyleWord(true);
+        txtPergunta.setFont(EstiloBase.fontePoppins(28f));
+        txtPergunta.setForeground(EstiloBase.COR_TEXTO_PRIMARIO);
+        txtPergunta.setBorder(BorderFactory.createEmptyBorder(22, 32, 20, 32));
+        txtPergunta.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cardPergunta.add(txtPergunta, BorderLayout.CENTER);
         fundo.add(cardPergunta);
 
         painelOpcoes = new JPanel(new GridLayout(2, 2, 18, 18));
         painelOpcoes.setOpaque(false);
-        painelOpcoes.setBounds(cx - cw / 2, 344, cw, 318);
+        painelOpcoes.setBounds(cx - cw / 2, 352, cw, 306);
         fundo.add(painelOpcoes);
 
         JPanel faixaFeedback = new JPanel(null) {
@@ -131,7 +139,8 @@ public class fmrQuestionario extends JDialog {
         barraProgresso.repaint();
 
         lblNumero.setText("PERGUNTA " + (idx + 1) + " DE " + controle.getTotalPerguntas());
-        lblPergunta.setText("<html><div style='text-align:center;width:880px'>" + controle.getPergunta(idx) + "</div></html>");
+        txtPergunta.setText(controle.getPergunta(idx));
+        txtPergunta.setCaretPosition(0);
 
         painelOpcoes.removeAll();
         String[] opcoes = controle.getOpcoesPergunta(idx);
@@ -152,7 +161,7 @@ public class fmrQuestionario extends JDialog {
     }
 
     private JButton criarBotaoOpcao(String texto, int indicePergunta) {
-        JButton btn = new JButton("<html><div style='width:360px'>" + texto + "</div></html>") {
+        JButton btn = new JButton("<html><div style='width:" + larguraTextoOpcao + "px'>" + texto + "</div></html>") {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();

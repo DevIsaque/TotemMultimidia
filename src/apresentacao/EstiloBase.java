@@ -198,15 +198,16 @@ public final class EstiloBase {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 ativarQualidade(g2);
-                g2.setColor(new Color(0, 0, 0, 95));
-                g2.fillRoundRect(0, 10, getWidth(), getHeight() - 10, 30, 30);
+
                 g2.setColor(COR_CARD);
-                g2.fillRoundRect(0, 0, getWidth(), getHeight() - 10, 30, 30);
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+
                 g2.setPaint(new GradientPaint(0, 0, COR_CARD_BORDA, getWidth(), getHeight(), COR_CARD_GLOW));
                 g2.setStroke(new BasicStroke(1.4f));
-                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 11, 30, 30);
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30);
+
                 g2.setColor(new Color(255, 255, 255, 16));
-                g2.drawRoundRect(10, 10, getWidth() - 21, getHeight() - 31, 22, 22);
+                g2.drawRoundRect(10, 10, getWidth() - 21, getHeight() - 21, 22, 22);
                 g2.dispose();
             }
         };
@@ -351,14 +352,15 @@ public final class EstiloBase {
         g2.setColor(COR_FUNDO);
         g2.fillRect(0, 0, largura, altura);
 
-        GradientPaint base = new GradientPaint(0, 0, new Color(0, 0, 0), largura, altura, new Color(14, 8, 10));
+        GradientPaint base = new GradientPaint(0, 0, new Color(0, 0, 0), largura, altura, new Color(8, 3, 6));
         g2.setPaint(base);
         g2.fillRect(0, 0, largura, altura);
 
-        desenharBlob(g2, largura * 0.18, altura * 0.18, Math.min(largura, altura) * 0.36f, COR_DESTAQUE);
-        desenharBlob(g2, largura * 0.56, altura * 0.15, Math.min(largura, altura) * 0.30f, COR_DESTAQUE_2);
-        desenharBlob(g2, largura * 0.84, altura * 0.78, Math.min(largura, altura) * 0.34f, COR_ACENTO);
-        desenharBlob(g2, largura * 0.15, altura * 0.82, Math.min(largura, altura) * 0.20f, new Color(255, 140, 72));
+        float raio = Math.max(largura, altura) * 0.72f;
+        desenharGradienteCanto(g2, largura, altura, 0, 0, raio, COR_DESTAQUE, 0.45f);
+        desenharGradienteCanto(g2, largura, altura, largura, 0, raio * 0.72f, COR_DESTAQUE_2, 0.32f);
+        desenharGradienteCanto(g2, largura, altura, largura, altura, raio * 0.82f, COR_ACENTO, 0.38f);
+        desenharGradienteCanto(g2, largura, altura, 0, altura, raio * 0.56f, new Color(255, 130, 38), 0.26f);
 
         g2.setColor(new Color(0, 0, 0, 102));
         g2.fillRect(0, 0, largura, altura);
@@ -370,10 +372,10 @@ public final class EstiloBase {
         }
 
         Random rng = new Random(seed);
-        for (int i = 0; i < 2400; i++) {
+        for (int i = 0; i < 1500; i++) {
             int x = rng.nextInt(Math.max(1, largura));
             int y = rng.nextInt(Math.max(1, altura));
-            int alpha = 8 + rng.nextInt(18);
+            int alpha = 6 + rng.nextInt(12);
             g2.setColor(new Color(255, 255, 255, alpha));
             g2.fillRect(x, y, 1, 1);
         }
@@ -420,6 +422,19 @@ public final class EstiloBase {
         g2.setPaint(paint);
         g2.fill(new Ellipse2D.Double(cx - raio, cy - raio, raio * 2, raio * 2));
         g2.setComposite(antigo);
+    }
+
+    private static void desenharGradienteCanto(Graphics2D g2, int largura, int altura, double cx, double cy, float raio, Color cor, float intensidade) {
+        Color centro = new Color(cor.getRed(), cor.getGreen(), cor.getBlue(), Math.round(255 * intensidade));
+        Color meio = new Color(cor.getRed(), cor.getGreen(), cor.getBlue(), Math.round(115 * intensidade));
+        Color fim = new Color(cor.getRed(), cor.getGreen(), cor.getBlue(), 0);
+        RadialGradientPaint paint = new RadialGradientPaint(
+                new Point((int) cx, (int) cy), raio,
+                new float[]{0f, 0.48f, 1f},
+                new Color[]{centro, meio, fim}
+        );
+        g2.setPaint(paint);
+        g2.fillRect(0, 0, largura, altura);
     }
 
     private static void ativarQualidade(Graphics2D g2) {

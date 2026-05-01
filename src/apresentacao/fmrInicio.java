@@ -28,31 +28,30 @@ public class fmrInicio extends JDialog {
         Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
 
         int margem = Math.max(54, tela.width / 28);
-        int colunaEsquerda = (int) (tela.width * 0.53);
+        int colunaEsquerda = (int) (tela.width * 0.52);
         int cardDireitaX = colunaEsquerda + 18;
         int cardDireitaW = tela.width - cardDireitaX - margem;
 
         JLabel lblTag = EstiloBase.criarTag("Museu multimidia");
-        lblTag.setBounds(margem, 54, 150, 34);
+        lblTag.setBounds(margem, 54, 186, 34);
         painel.add(lblTag);
 
-        JLabel lblTitulo = new JLabel("<html><div style='width:" + (colunaEsquerda - margem) + "px'>"
-                + "ROBOS<br>EXPLORADORES</div></html>");
-        lblTitulo.setFont(EstiloBase.fontePoppins(76f));
+        JLabel lblTitulo = new JLabel("Robos Exploradores");
+        lblTitulo.setFont(EstiloBase.fontePoppins(tela.width >= 1700 ? 64f : 54f));
         lblTitulo.setForeground(EstiloBase.COR_TEXTO_PRIMARIO);
-        lblTitulo.setBounds(margem, 118, colunaEsquerda - margem, 210);
+        lblTitulo.setBounds(margem, 140, colunaEsquerda - margem - 12, 82);
         painel.add(lblTitulo);
 
         JLabel lblSub = new JLabel("<html><div style='width:" + (colunaEsquerda - margem - 20) + "px'>"
                 + "Uma experiencia imersiva sobre as missoes que transformaram nossa visao de Marte. "
                 + "Toque para iniciar a jornada, conhecer as obras e interagir com o acervo digital.</div></html>");
-        lblSub.setFont(EstiloBase.fonteInter(23f));
+        lblSub.setFont(EstiloBase.fontePoppins(21f));
         lblSub.setForeground(EstiloBase.COR_TEXTO_SECUNDARIO);
-        lblSub.setBounds(margem, 338, colunaEsquerda - margem - 20, 108);
+        lblSub.setBounds(margem, 260, colunaEsquerda - margem - 20, 136);
         painel.add(lblSub);
 
         JButton btnIniciar = EstiloBase.criarBotaoPrimario("Iniciar experiencia");
-        btnIniciar.setBounds(margem, 470, 290, 64);
+        btnIniciar.setBounds(margem, 440, 290, 64);
         btnIniciar.addActionListener(e -> {
             dispose();
             controle.exibirCadastro();
@@ -65,7 +64,7 @@ public class fmrInicio extends JDialog {
                 EstiloBase.COR_TEXTO_FRACO
         );
         lblLinha.setHorizontalAlignment(SwingConstants.LEFT);
-        lblLinha.setBounds(margem, 556, colunaEsquerda - margem, 24);
+        lblLinha.setBounds(margem, 526, colunaEsquerda - margem, 24);
         painel.add(lblLinha);
 
         JPanel cardResumo = EstiloBase.criarCard();
@@ -113,24 +112,24 @@ public class fmrInicio extends JDialog {
             }
         };
         poster.setOpaque(false);
-        poster.setBounds(24, 24, cardDireitaW - 48, (int) ((tela.height - 172) * 0.56));
+        poster.setBounds(24, 24, cardDireitaW - 48, (int) ((tela.height - 172) * 0.58));
         cardResumo.add(poster);
 
         JLabel lblResumoTag = EstiloBase.criarTag("Exposicao em destaque");
         lblResumoTag.setBounds(34, 34, 170, 32);
         poster.add(lblResumoTag);
 
-        JLabel lblResumoTitulo = new JLabel("<html><div style='width:" + (poster.getWidth() - 70) + "px'>MARTE COMO PALCO DA CURIOSIDADE HUMANA</div></html>");
-        lblResumoTitulo.setFont(EstiloBase.fontePoppins(32f));
+        JLabel lblResumoTitulo = new JLabel("<html><div style='width:" + (poster.getWidth() - 82) + "px'>Marte como palco da curiosidade humana</div></html>");
+        lblResumoTitulo.setFont(EstiloBase.fontePoppins(28f));
         lblResumoTitulo.setForeground(EstiloBase.COR_TEXTO_PRIMARIO);
-        lblResumoTitulo.setBounds(34, 86, poster.getWidth() - 70, 96);
+        lblResumoTitulo.setBounds(34, 92, poster.getWidth() - 68, 128);
         poster.add(lblResumoTitulo);
 
         JLabel lblResumoTexto = new JLabel("<html><div style='width:" + (poster.getWidth() - 70) + "px'>"
                 + "Descubra as sondas, rovers e experimentos que redefiniram a exploracao planetaria.</div></html>");
-        lblResumoTexto.setFont(EstiloBase.fonteInter(18f));
+        lblResumoTexto.setFont(EstiloBase.fontePoppins(16f));
         lblResumoTexto.setForeground(EstiloBase.COR_TEXTO_SECUNDARIO);
-        lblResumoTexto.setBounds(34, poster.getHeight() - 96, poster.getWidth() - 70, 56);
+        lblResumoTexto.setBounds(34, poster.getHeight() - 104, poster.getWidth() - 70, 72);
         poster.add(lblResumoTexto);
 
         adicionarCartaoInfo(cardResumo, 24, poster.getY() + poster.getHeight() + 22, cardDireitaW - 48, 90,
