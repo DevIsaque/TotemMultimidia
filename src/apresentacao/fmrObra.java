@@ -195,12 +195,12 @@ public class fmrObra extends JDialog {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-                g2.setColor(new Color(10, 10, 14));
+                g2.setColor(EstiloBase.COR_PRETO_60);
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 28, 28);
 
                 GradientPaint fundo = new GradientPaint(
-                        0, 0, new Color(18, 11, 13),
-                        getWidth(), getHeight(), new Color(10, 10, 14)
+                        0, 0, new Color(255, 98, 36, 54),
+                        getWidth(), getHeight(), new Color(233, 32, 97, 42)
                 );
                 g2.setPaint(fundo);
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 28, 28);

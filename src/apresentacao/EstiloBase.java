@@ -17,17 +17,17 @@ import java.util.Random;
 public final class EstiloBase {
 
     private static final Font BASE_POPPINS = carregarFonte("/fonts/Poppins-SemiBold.ttf", "Segoe UI");
-    private static final Font BASE_INTER = carregarFonte("/fonts/Inter-Regular.ttf", "Segoe UI");
 
     public static final Color COR_FUNDO = new Color(6, 6, 10);
     public static final Color COR_FUNDO_PAINEL = new Color(12, 12, 18);
-    public static final Color COR_CARD = new Color(20, 20, 28, 216);
+    public static final Color COR_PRETO_60 = new Color(0, 0, 0, 153);
+    public static final Color COR_CARD = COR_PRETO_60;
     public static final Color COR_CARD_BORDA = new Color(255, 255, 255, 30);
-    public static final Color COR_CARD_GLOW = new Color(255, 146, 71, 92);
-    public static final Color COR_DESTAQUE = new Color(255, 115, 54);
-    public static final Color COR_DESTAQUE_HOVER = new Color(255, 149, 86);
-    public static final Color COR_DESTAQUE_2 = new Color(255, 191, 58);
-    public static final Color COR_ACENTO = new Color(255, 87, 147);
+    public static final Color COR_CARD_GLOW = new Color(255, 98, 36, 96);
+    public static final Color COR_DESTAQUE = new Color(255, 98, 36);
+    public static final Color COR_DESTAQUE_HOVER = new Color(255, 126, 70);
+    public static final Color COR_DESTAQUE_2 = new Color(255, 195, 5);
+    public static final Color COR_ACENTO = new Color(233, 32, 97);
     public static final Color COR_ACENTO_FRIO = new Color(255, 220, 203);
     public static final Color COR_TEXTO_PRIMARIO = new Color(247, 243, 239);
     public static final Color COR_TEXTO_SECUNDARIO = new Color(198, 191, 188);
@@ -36,12 +36,12 @@ public final class EstiloBase {
     public static final Color COR_ERRO = new Color(255, 107, 107);
 
     public static final Font FONTE_TITULO = fontePoppins(48f);
-    public static final Font FONTE_SUBTITULO = fonteInter(22f);
+    public static final Font FONTE_SUBTITULO = fontePoppins(22f);
     public static final Font FONTE_SECAO = fontePoppins(28f);
-    public static final Font FONTE_CORPO = fonteInter(18f);
+    public static final Font FONTE_CORPO = fontePoppins(18f);
     public static final Font FONTE_LABEL = fontePoppins(15f);
     public static final Font FONTE_BOTAO = fontePoppins(19f);
-    public static final Font FONTE_PEQUENA = fonteInter(14f);
+    public static final Font FONTE_PEQUENA = fontePoppins(14f);
 
     private EstiloBase() {
     }
@@ -53,6 +53,16 @@ public final class EstiloBase {
         dialog.setSize(tela);
         dialog.setLocation(0, 0);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+    }
+
+    public static void aplicarFonteGlobal() {
+        Font fontePadrao = fontePoppins(14f);
+        for (Object chave : UIManager.getDefaults().keySet().toArray()) {
+            Object valor = UIManager.get(chave);
+            if (valor instanceof Font) {
+                UIManager.put(chave, fontePadrao);
+            }
+        }
     }
 
     public static JLabel criarLabel(String texto, Font fonte, Color cor) {
@@ -188,7 +198,7 @@ public final class EstiloBase {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 ativarQualidade(g2);
-                g2.setColor(new Color(0, 0, 0, 65));
+                g2.setColor(new Color(0, 0, 0, 95));
                 g2.fillRoundRect(0, 10, getWidth(), getHeight() - 10, 30, 30);
                 g2.setColor(COR_CARD);
                 g2.fillRoundRect(0, 0, getWidth(), getHeight() - 10, 30, 30);
@@ -341,7 +351,7 @@ public final class EstiloBase {
         g2.setColor(COR_FUNDO);
         g2.fillRect(0, 0, largura, altura);
 
-        GradientPaint base = new GradientPaint(0, 0, new Color(5, 5, 8), largura, altura, new Color(18, 11, 13));
+        GradientPaint base = new GradientPaint(0, 0, new Color(0, 0, 0), largura, altura, new Color(14, 8, 10));
         g2.setPaint(base);
         g2.fillRect(0, 0, largura, altura);
 
@@ -350,7 +360,7 @@ public final class EstiloBase {
         desenharBlob(g2, largura * 0.84, altura * 0.78, Math.min(largura, altura) * 0.34f, COR_ACENTO);
         desenharBlob(g2, largura * 0.15, altura * 0.82, Math.min(largura, altura) * 0.20f, new Color(255, 140, 72));
 
-        g2.setColor(new Color(0, 0, 0, 135));
+        g2.setColor(new Color(0, 0, 0, 102));
         g2.fillRect(0, 0, largura, altura);
 
         g2.setColor(new Color(255, 255, 255, 8));
@@ -374,13 +384,15 @@ public final class EstiloBase {
     }
 
     public static Font fonteInter(float size) {
-        return BASE_INTER.deriveFont(size);
+        return BASE_POPPINS.deriveFont(size);
     }
 
     private static Font carregarFonte(String resourcePath, String fallbackName) {
         try (InputStream stream = EstiloBase.class.getResourceAsStream(resourcePath)) {
             if (stream != null) {
-                return Font.createFont(Font.TRUETYPE_FONT, stream);
+                Font fonte = Font.createFont(Font.TRUETYPE_FONT, stream);
+                GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(fonte);
+                return fonte;
             }
         } catch (FontFormatException | IOException ignored) {
         }

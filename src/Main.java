@@ -1,6 +1,7 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 import modelo.Controle;
+import apresentacao.EstiloBase;
 import javax.swing.*;
 
 /**
@@ -11,6 +12,7 @@ public class Main {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ignored) {}
+        EstiloBase.aplicarFonteGlobal();
 
         SwingUtilities.invokeLater(Controle::new);
     }
