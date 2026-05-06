@@ -172,6 +172,19 @@ public class fmrObra extends JDialog {
             faixaAcao.add(btn3D);
         }
 
+        if (indice > 0) {
+            boolean temBotao3D = controle.deveExibirModelo3D(indice);
+            JButton btnAnterior = EstiloBase.criarBotaoSecundario(temBotao3D ? "Anterior" : "Obra anterior");
+            int anteriorX = controle.deveExibirModelo3D(indice) ? 268 : 22;
+            int anteriorW = temBotao3D ? 180 : 210;
+            btnAnterior.setBounds(anteriorX, 44, anteriorW, 44);
+            btnAnterior.addActionListener(e -> {
+                dispose();
+                controle.exibirObra(indice - 1);
+            });
+            faixaAcao.add(btnAnterior);
+        }
+
         JButton btnProximo = EstiloBase.criarBotaoPrimario(indice == controle.getTotalObras() - 1
                 ? "Ir para o questionario"
                 : "Proxima obra");

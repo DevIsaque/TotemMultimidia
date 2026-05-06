@@ -59,7 +59,7 @@ public class fmrInicio extends JDialog {
         painel.add(btnIniciar);
 
         JLabel lblLinha = EstiloBase.criarLabel(
-                "10 obras  •  3 momentos interativos  •  1 questionario final",
+                "10 obras  •  linha do tempo completa  •  1 questionario final",
                 EstiloBase.FONTE_PEQUENA.deriveFont(15f),
                 EstiloBase.COR_TEXTO_FRACO
         );

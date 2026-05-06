@@ -295,10 +295,12 @@ public final class EstiloBase {
     public static void mostrarDialogoInformativo(Window owner, String marcador, String titulo, String mensagem, String textoBotao) {
         JDialog dialogo = new JDialog(owner, titulo, Dialog.ModalityType.APPLICATION_MODAL);
         dialogo.setUndecorated(true);
+        dialogo.setBackground(new Color(0, 0, 0, 0));
         dialogo.setSize(560, 360);
         dialogo.setLocationRelativeTo(owner);
 
-        JPanel fundo = criarPainelFundo(808L);
+        JPanel fundo = new JPanel(null);
+        fundo.setOpaque(false);
         fundo.setLayout(null);
 
         JPanel card = criarCard();
@@ -331,6 +333,7 @@ public final class EstiloBase {
         card.add(btnFechar);
 
         dialogo.setContentPane(fundo);
+        dialogo.getRootPane().setOpaque(false);
         dialogo.setVisible(true);
     }
 

@@ -40,24 +40,10 @@ public class Controle extends absPropriedades {
         new fmrObra(framePai, this, indice).setVisible(true);
     }
 
-    public void exibirMiniGame(int posicao) {
-        new fmrMiniGame(framePai, this, posicao).setVisible(true);
-    }
-
     // ── Lógica de fluxo ───────────────────────────────────────────────────
 
     public void proximaEtapaAposObra(int obraIdx) {
-        for (int pos : posicoesMinigame) {
-            if (pos == obraIdx) { exibirMiniGame(obraIdx); return; }
-        }
         int prox = obraIdx + 1;
-        if (prox < titulosObras.length) exibirObra(prox);
-        else exibirQuestionario();
-    }
-
-    public void aposMinigame(int obraAnterior) {
-        miniGameConcluido = true;
-        int prox = obraAnterior + 1;
         if (prox < titulosObras.length) exibirObra(prox);
         else exibirQuestionario();
     }
@@ -82,7 +68,6 @@ public class Controle extends absPropriedades {
         obraAtual         = 0;
         etapaAtual        = 0;
         notaSatisfacao    = -1;
-        miniGameConcluido = false;
         for (int i = 0; i < respostasVisitante.length; i++) respostasVisitante[i] = -1;
     }
 

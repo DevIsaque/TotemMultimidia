@@ -16,15 +16,11 @@ public abstract class absPropriedades implements intMetodos {
     // ── Controle de Fluxo ──────────────────────────────────────────────────
     protected int     etapaAtual;
     protected int     obraAtual;
-    protected boolean miniGameConcluido;
 
     // ── Obras (10 rovers/missões marcianas) ────────────────────────────────
     protected String[]  titulosObras;
     protected String[]  descricoesObras;
     protected boolean[] exibirModelo3D;   // true = exibe botão 3D (a partir da obra 3)
-
-    // ── Mini-Games ─────────────────────────────────────────────────────────
-    protected int[] posicoesMinigame;    // índices: 1, 4, 8
 
     // ── Questionário ───────────────────────────────────────────────────────
     protected String[]   perguntas;
@@ -53,7 +49,6 @@ public abstract class absPropriedades implements intMetodos {
         idadeVisitante     = 0;
         etapaAtual         = 0;
         obraAtual          = 0;
-        miniGameConcluido  = false;
         notaSatisfacao     = -1;
         respostasVisitante = new int[]{-1, -1, -1, -1, -1};
 
@@ -64,7 +59,6 @@ public abstract class absPropriedades implements intMetodos {
 
         inicializarObras();
         inicializarQuestionario();
-        inicializarMinigames();
     }
 
     private void inicializarObras() {
@@ -141,10 +135,6 @@ public abstract class absPropriedades implements intMetodos {
         gabaritos = new int[]{1, 2, 1, 3, 1};
     }
 
-    private void inicializarMinigames() {
-        posicoesMinigame = new int[]{1, 4, 8};
-    }
-
     // ── Implementações padrão de intMetodos ────────────────────────────────
 
     @Override
@@ -188,7 +178,6 @@ public abstract class absPropriedades implements intMetodos {
     public String[][] getOpcoes()                { return opcoes; }
     public int[]     getGabaritos()              { return gabaritos; }
     public int[]     getRespostasVisitante()     { return respostasVisitante; }
-    public int[]     getPosicoesMinigame()       { return posicoesMinigame; }
     public List<String>  getHistoricoNomes()     { return historicoNomes; }
     public List<Integer> getHistoricoIdades()    { return historicoIdades; }
     public List<Integer> getHistoricoPontuacoes(){ return historicoPontuacoes; }
