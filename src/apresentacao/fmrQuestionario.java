@@ -20,7 +20,7 @@ public class fmrQuestionario extends JDialog {
     private JButton[] botoesOpcao;
     private int opcaoSelecionada = -1;
     private JButton btnConfirmar;
-    private JLabel lblFeedback;
+    private JTextArea lblFeedback;
     private int larguraTextoOpcao;
 
     public fmrQuestionario(JFrame pai, Controle controle) {
@@ -34,18 +34,21 @@ public class fmrQuestionario extends JDialog {
     private void construirInterface() {
         JPanel fundo = EstiloBase.criarPainelFundo(55L);
         Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
+        int e32 = EstiloBase.escalar(32, tela);
+        int e40 = EstiloBase.escalar(40, tela);
         int cx = tela.width / 2;
 
         JLabel lblTag = EstiloBase.criarTag("Questionario final");
-        lblTag.setBounds(cx - 88, 40, 176, 34);
+        lblTag.setFont(EstiloBase.fonteResponsiva(13f, tela));
+        lblTag.setBounds(cx - EstiloBase.escalar(88, tela), e40, EstiloBase.escalar(176, tela), EstiloBase.escalar(34, tela));
         fundo.add(lblTag);
 
         lblNumero = EstiloBase.criarLabel(
                 "PERGUNTA 1 DE 5",
-                EstiloBase.FONTE_LABEL.deriveFont(14f),
+                EstiloBase.fonteResponsiva(14f, tela),
                 EstiloBase.COR_TEXTO_SECUNDARIO
         );
-        lblNumero.setBounds(0, 92, tela.width, 24);
+        lblNumero.setBounds(0, EstiloBase.escalar(92, tela), tela.width, EstiloBase.escalar(24, tela));
         fundo.add(lblNumero);
 
         barraProgresso = new JPanel() {
@@ -71,14 +74,18 @@ public class fmrQuestionario extends JDialog {
             }
         };
         barraProgresso.setOpaque(false);
-        barraProgresso.setBounds(cx - 260, 124, 520, 16);
+        int barraW = Math.min(EstiloBase.escalar(520, tela), tela.width - (e32 * 2));
+        barraProgresso.setBounds(cx - barraW / 2, EstiloBase.escalar(124, tela), barraW, EstiloBase.escalar(16, tela));
         fundo.add(barraProgresso);
 
         JPanel cardPergunta = EstiloBase.criarCard();
         cardPergunta.setLayout(new BorderLayout());
-        int cw = Math.min(1120, tela.width - 240);
-        larguraTextoOpcao = Math.max(300, ((cw - 18) / 2) - 72);
-        cardPergunta.setBounds(cx - cw / 2, 176, cw, 148);
+        int margemLateral = Math.max(e32, EstiloBase.escalar(120, tela));
+        int cw = Math.min(EstiloBase.escalar(1120, tela), tela.width - (margemLateral * 2));
+        larguraTextoOpcao = Math.max(EstiloBase.escalar(270, tela), ((cw - EstiloBase.escalar(18, tela)) / 2) - EstiloBase.escalar(72, tela));
+        int perguntaY = EstiloBase.escalar(176, tela);
+        int perguntaH = EstiloBase.escalar(154, tela);
+        cardPergunta.setBounds(cx - cw / 2, perguntaY, cw, perguntaH);
 
         txtPergunta = new JTextArea();
         txtPergunta.setEditable(false);
@@ -86,16 +93,22 @@ public class fmrQuestionario extends JDialog {
         txtPergunta.setOpaque(false);
         txtPergunta.setLineWrap(true);
         txtPergunta.setWrapStyleWord(true);
-        txtPergunta.setFont(EstiloBase.fontePoppins(28f));
+        txtPergunta.setFont(EstiloBase.fonteResponsiva(28f, tela));
         txtPergunta.setForeground(EstiloBase.COR_TEXTO_PRIMARIO);
-        txtPergunta.setBorder(BorderFactory.createEmptyBorder(22, 32, 20, 32));
+        txtPergunta.setBorder(BorderFactory.createEmptyBorder(
+                EstiloBase.escalar(20, tela), EstiloBase.escalar(32, tela),
+                EstiloBase.escalar(18, tela), EstiloBase.escalar(32, tela)));
         txtPergunta.setAlignmentX(Component.CENTER_ALIGNMENT);
         cardPergunta.add(txtPergunta, BorderLayout.CENTER);
         fundo.add(cardPergunta);
 
         painelOpcoes = new JPanel(new GridLayout(2, 2, 18, 18));
         painelOpcoes.setOpaque(false);
-        painelOpcoes.setBounds(cx - cw / 2, 352, cw, 306);
+        int opcoesY = perguntaY + perguntaH + EstiloBase.escalar(28, tela);
+        int feedbackH = EstiloBase.escalar(128, tela);
+        int feedbackY = tela.height - feedbackH - EstiloBase.escalar(42, tela);
+        int opcoesH = Math.max(EstiloBase.escalar(228, tela), feedbackY - opcoesY - EstiloBase.escalar(32, tela));
+        painelOpcoes.setBounds(cx - cw / 2, opcoesY, cw, opcoesH);
         fundo.add(painelOpcoes);
 
         JPanel faixaFeedback = new JPanel(null) {
@@ -110,19 +123,27 @@ public class fmrQuestionario extends JDialog {
             }
         };
         faixaFeedback.setOpaque(false);
-        faixaFeedback.setBounds(cx - 300, 694, 600, 88);
+        int feedbackW = Math.min(EstiloBase.escalar(680, tela), tela.width - (e32 * 2));
+        faixaFeedback.setBounds(cx - feedbackW / 2, feedbackY, feedbackW, feedbackH);
         fundo.add(faixaFeedback);
 
-        lblFeedback = EstiloBase.criarLabel(
-                "Escolha uma alternativa para continuar",
-                EstiloBase.FONTE_CORPO,
-                EstiloBase.COR_TEXTO_SECUNDARIO
-        );
-        lblFeedback.setBounds(20, 16, 560, 24);
+        lblFeedback = new JTextArea("Escolha uma alternativa para continuar");
+        lblFeedback.setEditable(false);
+        lblFeedback.setFocusable(false);
+        lblFeedback.setOpaque(false);
+        lblFeedback.setLineWrap(true);
+        lblFeedback.setWrapStyleWord(true);
+        lblFeedback.setFont(EstiloBase.fonteResponsiva(17f, tela));
+        lblFeedback.setForeground(EstiloBase.COR_TEXTO_SECUNDARIO);
+        lblFeedback.setBounds(EstiloBase.escalar(22, tela), EstiloBase.escalar(16, tela),
+                feedbackW - EstiloBase.escalar(44, tela), EstiloBase.escalar(34, tela));
         faixaFeedback.add(lblFeedback);
 
         btnConfirmar = EstiloBase.criarBotaoPrimario("Confirmar resposta");
-        btnConfirmar.setBounds(170, 38, 260, 40);
+        btnConfirmar.setFont(EstiloBase.fonteResponsiva(18f, tela));
+        int btnW = EstiloBase.escalar(280, tela);
+        int btnH = EstiloBase.escalar(44, tela);
+        btnConfirmar.setBounds((feedbackW - btnW) / 2, feedbackH - btnH - EstiloBase.escalar(14, tela), btnW, btnH);
         btnConfirmar.setEnabled(false);
         btnConfirmar.addActionListener(e -> confirmarResposta());
         faixaFeedback.add(btnConfirmar);
@@ -185,7 +206,8 @@ public class fmrQuestionario extends JDialog {
                 super.paintComponent(g);
             }
         };
-        btn.setFont(EstiloBase.fonteInter(indicePergunta == 4 ? 16f : 17f));
+        Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
+        btn.setFont(EstiloBase.fonteResponsiva(indicePergunta == 4 ? 16f : 17f, tela));
         btn.setHorizontalAlignment(SwingConstants.LEFT);
         btn.setBorder(BorderFactory.createEmptyBorder(18, 22, 18, 22));
         btn.setContentAreaFilled(false);

@@ -215,6 +215,33 @@ public final class EstiloBase {
         return card;
     }
 
+    public static JPanel criarCardDestaque() {
+        JPanel card = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                ativarQualidade(g2);
+
+                g2.setColor(new Color(0, 0, 0, 232));
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+
+                GradientPaint borda = new GradientPaint(
+                        0, 0, new Color(255, 255, 255, 58),
+                        getWidth(), getHeight(), COR_CARD_GLOW
+                );
+                g2.setPaint(borda);
+                g2.setStroke(new BasicStroke(1.6f));
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30);
+
+                g2.setColor(new Color(255, 255, 255, 14));
+                g2.drawRoundRect(10, 10, getWidth() - 21, getHeight() - 21, 22, 22);
+                g2.dispose();
+            }
+        };
+        card.setOpaque(false);
+        return card;
+    }
+
     public static JPanel criarPainelFundo(long seed) {
         JPanel painel = new JPanel(null) {
             @Override
@@ -292,29 +319,48 @@ public final class EstiloBase {
         campo.setBorder(criarBordaCampo(COR_CARD_BORDA));
     }
 
+    public static float escalaTela(Dimension tela) {
+        float escala = Math.min(tela.width / 1920f, tela.height / 1080f);
+        return Math.max(0.70f, Math.min(1.08f, escala));
+    }
+
+    public static int escalar(int valor, Dimension tela) {
+        return Math.max(1, Math.round(valor * escalaTela(tela)));
+    }
+
+    public static Font fonteResponsiva(float tamanho, Dimension tela) {
+        return fontePoppins(Math.max(11f, tamanho * escalaTela(tela)));
+    }
+
     public static void mostrarDialogoInformativo(Window owner, String marcador, String titulo, String mensagem, String textoBotao) {
         JDialog dialogo = new JDialog(owner, titulo, Dialog.ModalityType.APPLICATION_MODAL);
         dialogo.setUndecorated(true);
         dialogo.setBackground(new Color(0, 0, 0, 0));
-        dialogo.setSize(560, 360);
+        Dimension tela = owner != null && owner.getWidth() > 0
+                ? owner.getSize()
+                : Toolkit.getDefaultToolkit().getScreenSize();
+        int dialogW = Math.min(escalar(620, tela), tela.width - escalar(48, tela));
+        int dialogH = Math.min(escalar(390, tela), tela.height - escalar(48, tela));
+        dialogo.setSize(dialogW, dialogH);
         dialogo.setLocationRelativeTo(owner);
 
         JPanel fundo = new JPanel(null);
         fundo.setOpaque(false);
         fundo.setLayout(null);
 
-        JPanel card = criarCard();
+        int margem = escalar(24, tela);
+        JPanel card = criarCardDestaque();
         card.setLayout(null);
-        card.setBounds(24, 24, 512, 312);
+        card.setBounds(margem, margem, dialogW - (margem * 2), dialogH - (margem * 2));
         fundo.add(card);
 
         JLabel lblMarcador = criarTag(marcador);
-        lblMarcador.setBounds(28, 24, 120, 32);
+        lblMarcador.setBounds(escalar(28, tela), escalar(24, tela), escalar(132, tela), escalar(32, tela));
         card.add(lblMarcador);
 
-        JLabel lblTitulo = criarLabel(titulo, FONTE_SECAO.deriveFont(30f), COR_TEXTO_PRIMARIO);
+        JLabel lblTitulo = criarLabel(titulo, fonteResponsiva(30f, tela), COR_TEXTO_PRIMARIO);
         lblTitulo.setHorizontalAlignment(SwingConstants.LEFT);
-        lblTitulo.setBounds(28, 70, 456, 40);
+        lblTitulo.setBounds(escalar(28, tela), escalar(72, tela), card.getWidth() - escalar(56, tela), escalar(42, tela));
         card.add(lblTitulo);
 
         JTextArea corpo = new JTextArea(mensagem);
@@ -323,12 +369,14 @@ public final class EstiloBase {
         corpo.setLineWrap(true);
         corpo.setOpaque(false);
         corpo.setForeground(COR_TEXTO_SECUNDARIO);
-        corpo.setFont(FONTE_CORPO);
-        corpo.setBounds(28, 124, 456, 108);
+        corpo.setFont(fonteResponsiva(18f, tela));
+        corpo.setBounds(escalar(28, tela), escalar(130, tela), card.getWidth() - escalar(56, tela), escalar(112, tela));
         card.add(corpo);
 
         JButton btnFechar = criarBotaoPrimario(textoBotao);
-        btnFechar.setBounds(156, 242, 200, 58);
+        btnFechar.setFont(fonteResponsiva(19f, tela));
+        btnFechar.setBounds((card.getWidth() - escalar(210, tela)) / 2, card.getHeight() - escalar(76, tela),
+                escalar(210, tela), escalar(58, tela));
         btnFechar.addActionListener(e -> dialogo.dispose());
         card.add(btnFechar);
 

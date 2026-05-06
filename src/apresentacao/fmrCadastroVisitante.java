@@ -29,13 +29,17 @@ public class fmrCadastroVisitante extends JDialog {
         JPanel fundo = EstiloBase.criarPainelFundo(77L);
         Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
 
-        int cardW = Math.min(820, tela.width - 160);
-        int cardH = Math.min(700, tela.height - 120);
+        int p = EstiloBase.escalar(38, tela);
+        int gap = EstiloBase.escalar(18, tela);
+        int cardW = Math.min(EstiloBase.escalar(820, tela), tela.width - EstiloBase.escalar(80, tela));
+        int cardH = Math.min(EstiloBase.escalar(700, tela), tela.height - EstiloBase.escalar(84, tela));
         int cardX = (tela.width - cardW) / 2;
         int cardY = (tela.height - cardH) / 2;
 
         JLabel lblTagPagina = EstiloBase.criarTag("Primeiro passo");
-        lblTagPagina.setBounds(cardX, Math.max(28, cardY - 48), 154, 34);
+        lblTagPagina.setFont(EstiloBase.fonteResponsiva(13f, tela));
+        lblTagPagina.setBounds(cardX, Math.max(EstiloBase.escalar(20, tela), cardY - EstiloBase.escalar(48, tela)),
+                EstiloBase.escalar(154, tela), EstiloBase.escalar(34, tela));
         fundo.add(lblTagPagina);
 
         JPanel card = EstiloBase.criarCard();
@@ -44,35 +48,40 @@ public class fmrCadastroVisitante extends JDialog {
         fundo.add(card);
 
         JLabel lblCardTag = EstiloBase.criarTag("Cadastro do visitante");
-        lblCardTag.setBounds(38, 32, 206, 34);
+        lblCardTag.setFont(EstiloBase.fonteResponsiva(13f, tela));
+        lblCardTag.setBounds(p, EstiloBase.escalar(32, tela), EstiloBase.escalar(206, tela), EstiloBase.escalar(34, tela));
         card.add(lblCardTag);
 
         JLabel lblTitulo = EstiloBase.criarLabel(
                 "Identificacao da visita",
-                EstiloBase.fontePoppins(36f),
+                EstiloBase.fonteResponsiva(36f, tela),
                 EstiloBase.COR_TEXTO_PRIMARIO
         );
         lblTitulo.setHorizontalAlignment(SwingConstants.LEFT);
-        lblTitulo.setBounds(38, 84, cardW - 76, 44);
+        lblTitulo.setBounds(p, EstiloBase.escalar(84, tela), cardW - (p * 2), EstiloBase.escalar(44, tela));
         card.add(lblTitulo);
 
-        JLabel lblSub = new JLabel("<html><div style='width:" + (cardW - 86) + "px'>"
+        JLabel lblSub = new JLabel("<html><div style='width:" + (cardW - (p * 2) - EstiloBase.escalar(10, tela)) + "px'>"
                 + "Informe os dados basicos para iniciar a experiencia. Nenhuma chave, email ou dado sensivel e solicitado.</div></html>");
-        lblSub.setFont(EstiloBase.FONTE_PEQUENA.deriveFont(15f));
+        lblSub.setFont(EstiloBase.fonteResponsiva(15f, tela));
         lblSub.setForeground(EstiloBase.COR_TEXTO_SECUNDARIO);
-        lblSub.setBounds(38, 136, cardW - 76, 48);
+        lblSub.setBounds(p, EstiloBase.escalar(136, tela), cardW - (p * 2), EstiloBase.escalar(54, tela));
         card.add(lblSub);
 
-        int gap = 18;
-        int campoW = (cardW - 76 - gap) / 2;
-        int yPrimeiraLinha = 218;
+        int campoW = (cardW - (p * 2) - gap) / 2;
+        int yPrimeiraLinha = EstiloBase.escalar(218, tela);
+        int labelH = EstiloBase.escalar(24, tela);
+        int campoH = EstiloBase.escalar(58, tela);
+        int erroH = EstiloBase.escalar(22, tela);
 
         JLabel lblNome = criarLabelCampo("Nome");
-        lblNome.setBounds(38, yPrimeiraLinha, campoW, 24);
+        lblNome.setFont(EstiloBase.fonteResponsiva(16f, tela));
+        lblNome.setBounds(p, yPrimeiraLinha, campoW, labelH);
         card.add(lblNome);
 
         campoNome = EstiloBase.criarCampoTexto("Digite seu nome", 18);
-        campoNome.setBounds(38, yPrimeiraLinha + 30, campoW, 58);
+        campoNome.setFont(EstiloBase.fonteResponsiva(19f, tela));
+        campoNome.setBounds(p, yPrimeiraLinha + EstiloBase.escalar(30, tela), campoW, campoH);
         campoNome.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -82,15 +91,18 @@ public class fmrCadastroVisitante extends JDialog {
         card.add(campoNome);
 
         lblErroNome = criarLabelErro();
-        lblErroNome.setBounds(38, yPrimeiraLinha + 92, campoW, 22);
+        lblErroNome.setFont(EstiloBase.fonteResponsiva(13f, tela));
+        lblErroNome.setBounds(p, yPrimeiraLinha + EstiloBase.escalar(92, tela), campoW, erroH);
         card.add(lblErroNome);
 
         JLabel lblSobrenome = criarLabelCampo("Sobrenome");
-        lblSobrenome.setBounds(38 + campoW + gap, yPrimeiraLinha, campoW, 24);
+        lblSobrenome.setFont(EstiloBase.fonteResponsiva(16f, tela));
+        lblSobrenome.setBounds(p + campoW + gap, yPrimeiraLinha, campoW, labelH);
         card.add(lblSobrenome);
 
         campoSobrenome = EstiloBase.criarCampoTexto("Digite seu sobrenome", 18);
-        campoSobrenome.setBounds(38 + campoW + gap, yPrimeiraLinha + 30, campoW, 58);
+        campoSobrenome.setFont(EstiloBase.fonteResponsiva(19f, tela));
+        campoSobrenome.setBounds(p + campoW + gap, yPrimeiraLinha + EstiloBase.escalar(30, tela), campoW, campoH);
         campoSobrenome.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -100,16 +112,19 @@ public class fmrCadastroVisitante extends JDialog {
         card.add(campoSobrenome);
 
         lblErroSobrenome = criarLabelErro();
-        lblErroSobrenome.setBounds(38 + campoW + gap, yPrimeiraLinha + 92, campoW, 22);
+        lblErroSobrenome.setFont(EstiloBase.fonteResponsiva(13f, tela));
+        lblErroSobrenome.setBounds(p + campoW + gap, yPrimeiraLinha + EstiloBase.escalar(92, tela), campoW, erroH);
         card.add(lblErroSobrenome);
 
-        int yIdade = yPrimeiraLinha + 138;
+        int yIdade = yPrimeiraLinha + EstiloBase.escalar(138, tela);
         JLabel lblIdade = criarLabelCampo("Idade");
-        lblIdade.setBounds(38, yIdade, campoW, 24);
+        lblIdade.setFont(EstiloBase.fonteResponsiva(16f, tela));
+        lblIdade.setBounds(p, yIdade, campoW, labelH);
         card.add(lblIdade);
 
         campoIdade = EstiloBase.criarCampoTexto("Ex: 25", 4);
-        campoIdade.setBounds(38, yIdade + 30, campoW, 58);
+        campoIdade.setFont(EstiloBase.fonteResponsiva(19f, tela));
+        campoIdade.setBounds(p, yIdade + EstiloBase.escalar(30, tela), campoW, campoH);
         campoIdade.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -119,24 +134,27 @@ public class fmrCadastroVisitante extends JDialog {
         card.add(campoIdade);
 
         lblErroIdade = criarLabelErro();
-        lblErroIdade.setBounds(38, yIdade + 92, cardW - 76, 22);
+        lblErroIdade.setFont(EstiloBase.fonteResponsiva(13f, tela));
+        lblErroIdade.setBounds(p, yIdade + EstiloBase.escalar(92, tela), cardW - (p * 2), erroH);
         card.add(lblErroIdade);
 
         JPanel aviso = criarBlocoInformacao(
                 "Uso em totem",
                 "Os campos sao grandes, clicaveis e preparados para o teclado virtual interno."
         );
-        aviso.setBounds(38, yIdade + 136, cardW - 76, 88);
+        aviso.setBounds(p, yIdade + EstiloBase.escalar(136, tela), cardW - (p * 2), EstiloBase.escalar(88, tela));
         card.add(aviso);
 
-        int botoesY = cardH - 98;
+        int botoesY = cardH - EstiloBase.escalar(98, tela);
         JButton btnContinuar = EstiloBase.criarBotaoPrimario("Continuar");
-        btnContinuar.setBounds(38, botoesY, 230, 58);
+        btnContinuar.setFont(EstiloBase.fonteResponsiva(19f, tela));
+        btnContinuar.setBounds(p, botoesY, EstiloBase.escalar(230, tela), EstiloBase.escalar(58, tela));
         btnContinuar.addActionListener(e -> validarEAvancar());
         card.add(btnContinuar);
 
         JButton btnVoltar = EstiloBase.criarBotaoSecundario("Voltar");
-        btnVoltar.setBounds(286, botoesY, 180, 58);
+        btnVoltar.setFont(EstiloBase.fonteResponsiva(17f, tela));
+        btnVoltar.setBounds(p + EstiloBase.escalar(248, tela), botoesY, EstiloBase.escalar(180, tela), EstiloBase.escalar(58, tela));
         btnVoltar.addActionListener(e -> {
             dispose();
             controle.exibirTelaInicial();
@@ -179,10 +197,21 @@ public class fmrCadastroVisitante extends JDialog {
         lblTitulo.setBounds(20, 15, 260, 20);
         bloco.add(lblTitulo);
 
-        JLabel lblTexto = new JLabel("<html><div style='width:620px'>" + texto + "</div></html>");
+        JTextArea lblTexto = new JTextArea(texto);
+        lblTexto.setEditable(false);
+        lblTexto.setFocusable(false);
+        lblTexto.setOpaque(false);
+        lblTexto.setLineWrap(true);
+        lblTexto.setWrapStyleWord(true);
         lblTexto.setFont(EstiloBase.FONTE_PEQUENA.deriveFont(14f));
         lblTexto.setForeground(EstiloBase.COR_TEXTO_SECUNDARIO);
         lblTexto.setBounds(20, 40, 660, 34);
+        bloco.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                lblTexto.setBounds(20, 40, Math.max(1, bloco.getWidth() - 40), Math.max(28, bloco.getHeight() - 48));
+            }
+        });
         bloco.add(lblTexto);
 
         return bloco;

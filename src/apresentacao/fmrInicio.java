@@ -26,6 +26,7 @@ public class fmrInicio extends JDialog {
     private void construirInterface() {
         JPanel painel = EstiloBase.criarPainelFundo(42L);
         Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
+        float escala = EstiloBase.escalaTela(tela);
 
         int margem = Math.max(54, tela.width / 28);
         int colunaEsquerda = (int) (tela.width * 0.52);
@@ -33,25 +34,27 @@ public class fmrInicio extends JDialog {
         int cardDireitaW = tela.width - cardDireitaX - margem;
 
         JLabel lblTag = EstiloBase.criarTag("Museu multimidia");
-        lblTag.setBounds(margem, 54, 186, 34);
+        lblTag.setFont(EstiloBase.fonteResponsiva(13f, tela));
+        lblTag.setBounds(margem, EstiloBase.escalar(54, tela), EstiloBase.escalar(186, tela), EstiloBase.escalar(34, tela));
         painel.add(lblTag);
 
         JLabel lblTitulo = new JLabel("Robos Exploradores");
-        lblTitulo.setFont(EstiloBase.fontePoppins(tela.width >= 1700 ? 64f : 54f));
+        lblTitulo.setFont(EstiloBase.fontePoppins((tela.width >= 1700 ? 64f : 54f) * escala));
         lblTitulo.setForeground(EstiloBase.COR_TEXTO_PRIMARIO);
-        lblTitulo.setBounds(margem, 140, colunaEsquerda - margem - 12, 82);
+        lblTitulo.setBounds(margem, EstiloBase.escalar(140, tela), colunaEsquerda - margem - 12, EstiloBase.escalar(82, tela));
         painel.add(lblTitulo);
 
         JLabel lblSub = new JLabel("<html><div style='width:" + (colunaEsquerda - margem - 20) + "px'>"
                 + "Uma experiencia imersiva sobre as missoes que transformaram nossa visao de Marte. "
                 + "Toque para iniciar a jornada, conhecer as obras e interagir com o acervo digital.</div></html>");
-        lblSub.setFont(EstiloBase.fontePoppins(21f));
+        lblSub.setFont(EstiloBase.fonteResponsiva(21f, tela));
         lblSub.setForeground(EstiloBase.COR_TEXTO_SECUNDARIO);
-        lblSub.setBounds(margem, 260, colunaEsquerda - margem - 20, 136);
+        lblSub.setBounds(margem, EstiloBase.escalar(260, tela), colunaEsquerda - margem - 20, EstiloBase.escalar(136, tela));
         painel.add(lblSub);
 
         JButton btnIniciar = EstiloBase.criarBotaoPrimario("Iniciar experiencia");
-        btnIniciar.setBounds(margem, 440, 290, 64);
+        btnIniciar.setFont(EstiloBase.fonteResponsiva(19f, tela));
+        btnIniciar.setBounds(margem, EstiloBase.escalar(440, tela), EstiloBase.escalar(290, tela), EstiloBase.escalar(64, tela));
         btnIniciar.addActionListener(e -> {
             dispose();
             controle.exibirCadastro();
@@ -60,16 +63,18 @@ public class fmrInicio extends JDialog {
 
         JLabel lblLinha = EstiloBase.criarLabel(
                 "10 obras  •  linha do tempo completa  •  1 questionario final",
-                EstiloBase.FONTE_PEQUENA.deriveFont(15f),
+                EstiloBase.fonteResponsiva(15f, tela),
                 EstiloBase.COR_TEXTO_FRACO
         );
         lblLinha.setHorizontalAlignment(SwingConstants.LEFT);
-        lblLinha.setBounds(margem, 526, colunaEsquerda - margem, 24);
+        lblLinha.setBounds(margem, EstiloBase.escalar(526, tela), colunaEsquerda - margem, EstiloBase.escalar(24, tela));
         painel.add(lblLinha);
 
         JPanel cardResumo = EstiloBase.criarCard();
         cardResumo.setLayout(null);
-        cardResumo.setBounds(cardDireitaX, 86, cardDireitaW, tela.height - 172);
+        int cardResumoY = EstiloBase.escalar(86, tela);
+        int cardResumoH = tela.height - (cardResumoY * 2);
+        cardResumo.setBounds(cardDireitaX, cardResumoY, cardDireitaW, cardResumoH);
         painel.add(cardResumo);
 
         JPanel poster = new JPanel(null) {
@@ -112,40 +117,49 @@ public class fmrInicio extends JDialog {
             }
         };
         poster.setOpaque(false);
-        poster.setBounds(24, 24, cardDireitaW - 48, (int) ((tela.height - 172) * 0.58));
+        int posterX = EstiloBase.escalar(24, tela);
+        int posterH = Math.max(EstiloBase.escalar(250, tela), Math.min((int) (cardResumoH * 0.58), cardResumoH - EstiloBase.escalar(220, tela)));
+        poster.setBounds(posterX, posterX, cardDireitaW - (posterX * 2), posterH);
         cardResumo.add(poster);
 
         JLabel lblResumoTag = EstiloBase.criarTag("Exposicao em destaque");
-        lblResumoTag.setBounds(34, 34, 170, 32);
+        lblResumoTag.setFont(EstiloBase.fonteResponsiva(13f, tela));
+        lblResumoTag.setBounds(EstiloBase.escalar(34, tela), EstiloBase.escalar(34, tela), EstiloBase.escalar(170, tela), EstiloBase.escalar(32, tela));
         poster.add(lblResumoTag);
 
         JLabel lblResumoTitulo = new JLabel("<html><div style='width:" + (poster.getWidth() - 82) + "px'>Marte como palco da curiosidade humana</div></html>");
-        lblResumoTitulo.setFont(EstiloBase.fontePoppins(28f));
+        lblResumoTitulo.setFont(EstiloBase.fonteResponsiva(28f, tela));
         lblResumoTitulo.setForeground(EstiloBase.COR_TEXTO_PRIMARIO);
-        lblResumoTitulo.setBounds(34, 92, poster.getWidth() - 68, 128);
+        lblResumoTitulo.setBounds(EstiloBase.escalar(34, tela), EstiloBase.escalar(92, tela),
+                poster.getWidth() - EstiloBase.escalar(68, tela), EstiloBase.escalar(128, tela));
         poster.add(lblResumoTitulo);
 
         JLabel lblResumoTexto = new JLabel("<html><div style='width:" + (poster.getWidth() - 70) + "px'>"
                 + "Descubra as sondas, rovers e experimentos que redefiniram a exploracao planetaria.</div></html>");
-        lblResumoTexto.setFont(EstiloBase.fontePoppins(16f));
+        lblResumoTexto.setFont(EstiloBase.fonteResponsiva(16f, tela));
         lblResumoTexto.setForeground(EstiloBase.COR_TEXTO_SECUNDARIO);
-        lblResumoTexto.setBounds(34, poster.getHeight() - 104, poster.getWidth() - 70, 72);
+        lblResumoTexto.setBounds(EstiloBase.escalar(34, tela), poster.getHeight() - EstiloBase.escalar(104, tela),
+                poster.getWidth() - EstiloBase.escalar(70, tela), EstiloBase.escalar(72, tela));
         poster.add(lblResumoTexto);
 
-        adicionarCartaoInfo(cardResumo, 24, poster.getY() + poster.getHeight() + 22, cardDireitaW - 48, 90,
+        int infoH = Math.max(EstiloBase.escalar(70, tela),
+                (cardResumoH - poster.getY() - poster.getHeight() - EstiloBase.escalar(58, tela)) / 2);
+        int infoGap = EstiloBase.escalar(14, tela);
+        int infoY1 = poster.getY() + poster.getHeight() + EstiloBase.escalar(18, tela);
+        adicionarCartaoInfo(cardResumo, posterX, infoY1, cardDireitaW - (posterX * 2), infoH,
                 "Fluxo pensado para toque",
                 "Grandes areas clicaveis, leitura forte e navegacao simples para totens.");
-        adicionarCartaoInfo(cardResumo, 24, poster.getY() + poster.getHeight() + 124, cardDireitaW - 48, 90,
+        adicionarCartaoInfo(cardResumo, posterX, infoY1 + infoH + infoGap, cardDireitaW - (posterX * 2), infoH,
                 "Narrativa continua",
                 "Arte, descricao, interacoes e quiz final com o mesmo acabamento visual.");
 
         JLabel lblRodape = EstiloBase.criarLabel(
                 "Use a tela inteira para navegar. Este modo foi redesenhado para parecer uma instalacao de museu, nao um formulario corporativo.",
-                EstiloBase.FONTE_PEQUENA.deriveFont(14f),
+                EstiloBase.fonteResponsiva(14f, tela),
                 EstiloBase.COR_TEXTO_FRACO
         );
         lblRodape.setHorizontalAlignment(SwingConstants.LEFT);
-        lblRodape.setBounds(margem, tela.height - 56, tela.width - (margem * 2), 20);
+        lblRodape.setBounds(margem, tela.height - EstiloBase.escalar(56, tela), tela.width - (margem * 2), EstiloBase.escalar(20, tela));
         painel.add(lblRodape);
 
         setContentPane(painel);
