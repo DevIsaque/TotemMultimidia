@@ -29,31 +29,42 @@ public class TecladoVirtual extends JDialog {
 
     private void configurarJanela() {
         setUndecorated(true);
-        setSize(940, 470);
+        Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
+        int largura = Math.min(940, tela.width - 80);
+        int altura = Math.min(470, tela.height - 80);
+        setSize(largura, altura);
         setLocationRelativeTo(getOwner());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setBackground(EstiloBase.COR_FUNDO);
+        setBackground(new Color(0, 0, 0, 0));
     }
 
     private void construirInterface() {
-        JPanel fundo = EstiloBase.criarPainelFundo(915L);
-        fundo.setLayout(new BorderLayout(0, 14));
-        fundo.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
+        int margem = EstiloBase.escalar(20, tela);
 
-        JPanel card = EstiloBase.criarCard();
-        card.setLayout(new BorderLayout(0, 14));
-        card.setBorder(BorderFactory.createEmptyBorder(18, 18, 18, 18));
+        JPanel fundo = new JPanel(new BorderLayout(0, EstiloBase.escalar(14, tela)));
+        fundo.setOpaque(false);
+        fundo.setBorder(BorderFactory.createEmptyBorder(margem, margem, margem, margem));
+
+        JPanel card = EstiloBase.criarCardDestaque();
+        card.setLayout(new BorderLayout(0, EstiloBase.escalar(14, tela)));
+        card.setBorder(BorderFactory.createEmptyBorder(
+                EstiloBase.escalar(18, tela),
+                EstiloBase.escalar(18, tela),
+                EstiloBase.escalar(18, tela),
+                EstiloBase.escalar(18, tela)
+        ));
         fundo.add(card, BorderLayout.CENTER);
 
         JPanel topo = new JPanel(new BorderLayout(0, 12));
         topo.setOpaque(false);
 
-        JLabel lblTitulo = EstiloBase.criarLabel("Teclado virtual", EstiloBase.fontePoppins(24f), EstiloBase.COR_TEXTO_PRIMARIO);
+        JLabel lblTitulo = EstiloBase.criarLabel("Teclado virtual", EstiloBase.fonteResponsiva(24f, tela), EstiloBase.COR_TEXTO_PRIMARIO);
         lblTitulo.setHorizontalAlignment(SwingConstants.LEFT);
         topo.add(lblTitulo, BorderLayout.NORTH);
 
         JLabel lblPreview = new JLabel(" ", SwingConstants.LEFT);
-        lblPreview.setFont(EstiloBase.fonteInter(22f));
+        lblPreview.setFont(EstiloBase.fonteResponsiva(22f, tela));
         lblPreview.setForeground(EstiloBase.COR_TEXTO_PRIMARIO);
         lblPreview.setOpaque(true);
         lblPreview.setBackground(new Color(10, 10, 16));
@@ -66,12 +77,12 @@ public class TecladoVirtual extends JDialog {
 
         card.add(topo, BorderLayout.NORTH);
 
-        painelTeclas = new JPanel(new GridLayout(4, 10, 8, 8));
+        painelTeclas = new JPanel(new GridLayout(4, 10, EstiloBase.escalar(8, tela), EstiloBase.escalar(8, tela)));
         painelTeclas.setOpaque(false);
         construirTeclas(painelTeclas, lblPreview);
         card.add(painelTeclas, BorderLayout.CENTER);
 
-        JPanel barraInferior = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        JPanel barraInferior = new JPanel(new FlowLayout(FlowLayout.CENTER, EstiloBase.escalar(10, tela), 0));
         barraInferior.setOpaque(false);
 
         JButton btnShift = criarTeclaEspecial("Shift", 118, 58);
@@ -105,7 +116,8 @@ public class TecladoVirtual extends JDialog {
         });
 
         JButton btnOK = EstiloBase.criarBotaoPrimario("Confirmar");
-        btnOK.setPreferredSize(new Dimension(156, 58));
+        btnOK.setFont(EstiloBase.fonteResponsiva(18f, tela));
+        btnOK.setPreferredSize(new Dimension(EstiloBase.escalar(156, tela), EstiloBase.escalar(58, tela)));
         btnOK.addActionListener(e -> dispose());
 
         barraInferior.add(btnShift);
@@ -116,6 +128,7 @@ public class TecladoVirtual extends JDialog {
 
         card.add(barraInferior, BorderLayout.SOUTH);
         setContentPane(fundo);
+        getRootPane().setOpaque(false);
     }
 
     private void construirTeclas(JPanel painel, JLabel preview) {
@@ -134,6 +147,7 @@ public class TecladoVirtual extends JDialog {
     }
 
     private JButton criarTeclaLetra(String texto) {
+        Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
         JButton btn = new JButton(texto) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -151,7 +165,7 @@ public class TecladoVirtual extends JDialog {
                 g2.dispose();
 
                 setForeground(EstiloBase.COR_TEXTO_PRIMARIO);
-                setFont(EstiloBase.fontePoppins(18f));
+                setFont(EstiloBase.fonteResponsiva(18f, tela));
                 super.paintComponent(g);
             }
         };
@@ -160,13 +174,15 @@ public class TecladoVirtual extends JDialog {
         btn.setFocusPainted(false);
         btn.setOpaque(false);
         btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btn.setPreferredSize(new Dimension(78, 54));
+        btn.setPreferredSize(new Dimension(EstiloBase.escalar(78, tela), EstiloBase.escalar(54, tela)));
         return btn;
     }
 
     private JButton criarTeclaEspecial(String texto, int largura, int altura) {
+        Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
         JButton btn = EstiloBase.criarBotaoSecundario(texto);
-        btn.setPreferredSize(new Dimension(largura, altura));
+        btn.setFont(EstiloBase.fonteResponsiva(17f, tela));
+        btn.setPreferredSize(new Dimension(EstiloBase.escalar(largura, tela), EstiloBase.escalar(altura, tela)));
         return btn;
     }
 }

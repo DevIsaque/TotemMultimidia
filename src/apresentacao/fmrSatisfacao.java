@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Path2D;
 
 /**
  * Tela final de satisfacao em sintonia com o novo visual.
@@ -84,7 +85,7 @@ public class fmrSatisfacao extends JDialog {
         estrelas = new JLabel[6];
         for (int i = 0; i <= 5; i++) {
             final int nota = i;
-            JLabel estrela = new JLabel(i == 0 ? "0" : "★", SwingConstants.CENTER);
+            JLabel estrela = i == 0 ? new JLabel("0", SwingConstants.CENTER) : new EstrelaAvaliacao();
             estrela.setFont(i == 0 ? EstiloBase.fonteResponsiva(36f, tela) : EstiloBase.fonteResponsiva(58f, tela));
             estrela.setForeground(EstiloBase.COR_TEXTO_FRACO);
             estrela.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -162,10 +163,11 @@ public class fmrSatisfacao extends JDialog {
     private void destacarAte(int nota) {
         for (int i = 0; i <= 5; i++) {
             estrelas[i].setForeground(i <= nota && nota > 0
-                    ? EstiloBase.COR_DESTAQUE_2
+                    ? EstiloBase.COR_DESTAQUE
                     : i == 0 && nota == 0
                     ? EstiloBase.COR_DESTAQUE
                     : EstiloBase.COR_TEXTO_FRACO);
+            estrelas[i].repaint();
         }
     }
 
@@ -175,13 +177,67 @@ public class fmrSatisfacao extends JDialog {
             if (i == 0 && nota == 0) {
                 estrelas[i].setForeground(EstiloBase.COR_DESTAQUE);
             } else {
-                estrelas[i].setForeground(ativo && nota > 0 ? EstiloBase.COR_DESTAQUE_2 : EstiloBase.COR_TEXTO_FRACO);
+                estrelas[i].setForeground(ativo && nota > 0 ? EstiloBase.COR_DESTAQUE : EstiloBase.COR_TEXTO_FRACO);
             }
+            estrelas[i].repaint();
         }
     }
 
     private void enviarAvaliacao() {
         dispose();
         controle.finalizarVisita(notaSelecionada);
+    }
+
+    private static class EstrelaAvaliacao extends JLabel {
+
+        EstrelaAvaliacao() {
+            super("", SwingConstants.CENTER);
+            setOpaque(false);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
+            int tamanho = Math.max(24, Math.min(getWidth(), getHeight()) - 16);
+            double raioExterno = tamanho / 2.0;
+            double raioInterno = raioExterno * 0.44;
+            double centroX = getWidth() / 2.0;
+            double centroY = getHeight() / 2.0 + 2;
+
+            Path2D estrela = criarFormaEstrela(centroX, centroY, raioExterno, raioInterno);
+
+            g2.setColor(getForeground());
+            g2.fill(estrela);
+            g2.setStroke(new BasicStroke(1.2f));
+            g2.setColor(new Color(255, 255, 255, 48));
+            g2.draw(estrela);
+            g2.dispose();
+        }
+
+        private Path2D criarFormaEstrela(double centroX, double centroY, double raioExterno, double raioInterno) {
+            Path2D caminho = new Path2D.Double();
+            double anguloInicial = -Math.PI / 2;
+
+            for (int i = 0; i < 10; i++) {
+                double raio = i % 2 == 0 ? raioExterno : raioInterno;
+                double angulo = anguloInicial + i * Math.PI / 5;
+                double x = centroX + Math.cos(angulo) * raio;
+                double y = centroY + Math.sin(angulo) * raio;
+
+                if (i == 0) {
+                    caminho.moveTo(x, y);
+                } else {
+                    caminho.lineTo(x, y);
+                }
+            }
+
+            caminho.closePath();
+            return caminho;
+        }
     }
 }
