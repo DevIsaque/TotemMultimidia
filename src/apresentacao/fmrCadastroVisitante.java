@@ -1,0 +1,313 @@
+package apresentacao;
+
+import modelo.Controle;
+
+import javax.swing.*;
+import java.awt.*;
+
+/**
+ * Tela de cadastro do visitante em card central, inspirada em um layout flex.
+ *
+ * Melhoria implementada:
+ * - Nome com validação.
+ * - Sobrenome com validação.
+ * - Faixa etária por RadioButton.
+ * - Remoção da idade exata por regra de LGPD.
+ * - Botão "Iniciar aventura".
+ */
+public class fmrCadastroVisitante extends JDialog {
+
+    private final Controle controle;
+
+    private JTextField campoNome;
+    private JTextField campoSobrenome;
+
+    private JRadioButton radio10a20;
+    private JRadioButton radio20a30;
+    private JRadioButton radio40a50;
+    private ButtonGroup grupoFaixaEtaria;
+
+    private JLabel lblErroNome;
+    private JLabel lblErroSobrenome;
+    private JLabel lblErroFaixaEtaria;
+
+    public fmrCadastroVisitante(JFrame pai, Controle controle) {
+        super(pai, true);
+        this.controle = controle;
+        EstiloBase.configurarDialogFullscreen(this);
+        construirInterface();
+    }
+
+    private void construirInterface() {
+        JPanel fundo = EstiloBase.criarPainelFundo(77L);
+        Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
+
+        int cardW = Math.min(820, tela.width - 160);
+        int cardH = Math.min(700, tela.height - 120);
+        int cardX = (tela.width - cardW) / 2;
+        int cardY = (tela.height - cardH) / 2;
+
+        JLabel lblTagPagina = EstiloBase.criarTag("Primeiro passo");
+        lblTagPagina.setBounds(cardX, Math.max(28, cardY - 48), 154, 34);
+        fundo.add(lblTagPagina);
+
+        JPanel card = EstiloBase.criarCard();
+        card.setLayout(null);
+        card.setBounds(cardX, cardY, cardW, cardH);
+        fundo.add(card);
+
+        JLabel lblCardTag = EstiloBase.criarTag("Cadastro do visitante");
+        lblCardTag.setBounds(38, 32, 206, 34);
+        card.add(lblCardTag);
+
+        JLabel lblTitulo = EstiloBase.criarLabel(
+                "Identificação da visita",
+                EstiloBase.fontePoppins(36f),
+                EstiloBase.COR_TEXTO_PRIMARIO
+        );
+        lblTitulo.setHorizontalAlignment(SwingConstants.LEFT);
+        lblTitulo.setBounds(38, 84, cardW - 76, 44);
+        card.add(lblTitulo);
+
+        JLabel lblSub = new JLabel("<html><div style='width:" + (cardW - 86) + "px'>"
+                + "Informe apenas os dados necessários para iniciar a experiência: "
+                + "nome, sobrenome e faixa etária.</div></html>");
+        lblSub.setFont(EstiloBase.FONTE_PEQUENA.deriveFont(15f));
+        lblSub.setForeground(EstiloBase.COR_TEXTO_SECUNDARIO);
+        lblSub.setBounds(38, 136, cardW - 76, 48);
+        card.add(lblSub);
+
+        int gap = 18;
+        int campoW = (cardW - 76 - gap) / 2;
+        int yPrimeiraLinha = 218;
+
+        // ── Campo Nome ─────────────────────────────────────────────────────
+
+        JLabel lblNome = criarLabelCampo("Nome");
+        lblNome.setBounds(38, yPrimeiraLinha, campoW, 24);
+        card.add(lblNome);
+
+        campoNome = EstiloBase.criarCampoTexto("Digite seu nome", 18);
+        campoNome.setBounds(38, yPrimeiraLinha + 30, campoW, 58);
+        campoNome.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                abrirTeclado(campoNome);
+            }
+        });
+        card.add(campoNome);
+
+        lblErroNome = criarLabelErro();
+        lblErroNome.setBounds(38, yPrimeiraLinha + 92, campoW, 22);
+        card.add(lblErroNome);
+
+        // ── Campo Sobrenome ────────────────────────────────────────────────
+
+        JLabel lblSobrenome = criarLabelCampo("Sobrenome");
+        lblSobrenome.setBounds(38 + campoW + gap, yPrimeiraLinha, campoW, 24);
+        card.add(lblSobrenome);
+
+        campoSobrenome = EstiloBase.criarCampoTexto("Digite seu sobrenome", 18);
+        campoSobrenome.setBounds(38 + campoW + gap, yPrimeiraLinha + 30, campoW, 58);
+        campoSobrenome.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                abrirTeclado(campoSobrenome);
+            }
+        });
+        card.add(campoSobrenome);
+
+        lblErroSobrenome = criarLabelErro();
+        lblErroSobrenome.setBounds(38 + campoW + gap, yPrimeiraLinha + 92, campoW, 22);
+        card.add(lblErroSobrenome);
+
+        // ── Faixa etária com RadioButton ───────────────────────────────────
+
+        int yFaixaEtaria = yPrimeiraLinha + 138;
+
+        JLabel lblFaixaEtaria = criarLabelCampo("Faixa etária");
+        lblFaixaEtaria.setBounds(38, yFaixaEtaria, cardW - 76, 24);
+        card.add(lblFaixaEtaria);
+
+        JLabel lblLgpd = new JLabel("<html><div style='width:" + (cardW - 86) + "px'>"
+                + "Por regras de privacidade e LGPD, não solicitamos a idade exata. "
+                + "Selecione apenas uma faixa etária.</div></html>");
+        lblLgpd.setFont(EstiloBase.FONTE_PEQUENA.deriveFont(14f));
+        lblLgpd.setForeground(EstiloBase.COR_TEXTO_SECUNDARIO);
+        lblLgpd.setBounds(38, yFaixaEtaria + 26, cardW - 76, 42);
+        card.add(lblLgpd);
+
+        grupoFaixaEtaria = new ButtonGroup();
+
+        radio10a20 = criarRadioFaixaEtaria("10 anos a 20 anos");
+        radio20a30 = criarRadioFaixaEtaria("20 anos a 30 anos");
+        radio40a50 = criarRadioFaixaEtaria("40 anos a 50 anos");
+
+        grupoFaixaEtaria.add(radio10a20);
+        grupoFaixaEtaria.add(radio20a30);
+        grupoFaixaEtaria.add(radio40a50);
+
+        radio10a20.setBounds(38, yFaixaEtaria + 78, 220, 32);
+        radio20a30.setBounds(280, yFaixaEtaria + 78, 220, 32);
+        radio40a50.setBounds(522, yFaixaEtaria + 78, 220, 32);
+
+        card.add(radio10a20);
+        card.add(radio20a30);
+        card.add(radio40a50);
+
+        lblErroFaixaEtaria = criarLabelErro();
+        lblErroFaixaEtaria.setBounds(38, yFaixaEtaria + 114, cardW - 76, 22);
+        card.add(lblErroFaixaEtaria);
+
+        // ── Bloco de informação ────────────────────────────────────────────
+
+        JPanel aviso = criarBlocoInformacao(
+                "Privacidade dos dados",
+                "O sistema armazena apenas nome, sobrenome e faixa etária em um vetor. " +
+                        "Nenhuma idade exata, e-mail, documento ou dado sensível é solicitado."
+        );
+        aviso.setBounds(38, yFaixaEtaria + 150, cardW - 76, 88);
+        card.add(aviso);
+
+        // ── Botões ─────────────────────────────────────────────────────────
+
+        int botoesY = cardH - 98;
+
+        JButton btnContinuar = EstiloBase.criarBotaoPrimario("Iniciar aventura");
+        btnContinuar.setBounds(38, botoesY, 230, 58);
+        btnContinuar.addActionListener(e -> validarEAvancar());
+        card.add(btnContinuar);
+
+        JButton btnVoltar = EstiloBase.criarBotaoSecundario("Voltar");
+        btnVoltar.setBounds(286, botoesY, 180, 58);
+        btnVoltar.addActionListener(e -> {
+            dispose();
+            controle.exibirTelaInicial();
+        });
+        card.add(btnVoltar);
+
+        setContentPane(fundo);
+    }
+
+    private JLabel criarLabelCampo(String texto) {
+        JLabel label = EstiloBase.criarLabel(
+                texto,
+                EstiloBase.FONTE_LABEL.deriveFont(16f),
+                EstiloBase.COR_ACENTO_FRIO
+        );
+        label.setHorizontalAlignment(SwingConstants.LEFT);
+        return label;
+    }
+
+    private JLabel criarLabelErro() {
+        JLabel label = new JLabel("");
+        label.setFont(EstiloBase.FONTE_PEQUENA.deriveFont(13f));
+        label.setForeground(EstiloBase.COR_ERRO);
+        return label;
+    }
+
+    private JRadioButton criarRadioFaixaEtaria(String texto) {
+        JRadioButton radio = new JRadioButton(texto);
+        radio.setOpaque(false);
+        radio.setFont(EstiloBase.FONTE_LABEL.deriveFont(15f));
+        radio.setForeground(EstiloBase.COR_TEXTO_PRIMARIO);
+        radio.setFocusPainted(false);
+        radio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        return radio;
+    }
+
+    private String obterFaixaEtariaSelecionada() {
+        if (radio10a20.isSelected()) {
+            return "10 anos a 20 anos";
+        }
+
+        if (radio20a30.isSelected()) {
+            return "20 anos a 30 anos";
+        }
+
+        if (radio40a50.isSelected()) {
+            return "40 anos a 50 anos";
+        }
+
+        return "";
+    }
+
+    private JPanel criarBlocoInformacao(String titulo, String texto) {
+        JPanel bloco = new JPanel(null) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(new Color(255, 255, 255, 9));
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 24, 24);
+                g2.setColor(new Color(255, 255, 255, 18));
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 24, 24);
+                g2.dispose();
+            }
+        };
+        bloco.setOpaque(false);
+
+        JLabel lblTitulo = EstiloBase.criarLabel(
+                titulo,
+                EstiloBase.FONTE_LABEL.deriveFont(15f),
+                EstiloBase.COR_TEXTO_PRIMARIO
+        );
+        lblTitulo.setHorizontalAlignment(SwingConstants.LEFT);
+        lblTitulo.setBounds(20, 15, 260, 20);
+        bloco.add(lblTitulo);
+
+        JLabel lblTexto = new JLabel("<html><div style='width:620px'>" + texto + "</div></html>");
+        lblTexto.setFont(EstiloBase.FONTE_PEQUENA.deriveFont(14f));
+        lblTexto.setForeground(EstiloBase.COR_TEXTO_SECUNDARIO);
+        lblTexto.setBounds(20, 40, 660, 34);
+        bloco.add(lblTexto);
+
+        return bloco;
+    }
+
+    private void validarEAvancar() {
+        String nome = campoNome.getText().trim();
+        String sobrenome = campoSobrenome.getText().trim();
+        String faixaEtaria = obterFaixaEtariaSelecionada();
+
+        boolean ok = true;
+
+        String erroN = controle.erroNome(nome);
+        if (!erroN.isEmpty()) {
+            lblErroNome.setText("- " + erroN);
+            EstiloBase.marcarCampoComErro(campoNome);
+            ok = false;
+        } else {
+            lblErroNome.setText("");
+            EstiloBase.restaurarCampo(campoNome);
+        }
+
+        String erroS = controle.erroSobrenome(sobrenome);
+        if (!erroS.isEmpty()) {
+            lblErroSobrenome.setText("- " + erroS);
+            EstiloBase.marcarCampoComErro(campoSobrenome);
+            ok = false;
+        } else {
+            lblErroSobrenome.setText("");
+            EstiloBase.restaurarCampo(campoSobrenome);
+        }
+
+        String erroF = controle.erroFaixaEtaria(faixaEtaria);
+        if (!erroF.isEmpty()) {
+            lblErroFaixaEtaria.setText("- " + erroF);
+            ok = false;
+        } else {
+            lblErroFaixaEtaria.setText("");
+        }
+
+        if (ok && controle.salvarDadosVisitante(nome, sobrenome, faixaEtaria)) {
+            dispose();
+            controle.exibirObra(0);
+        }
+    }
+
+    private void abrirTeclado(JTextField campo) {
+        TecladoVirtual teclado = new TecladoVirtual(this, campo);
+        teclado.setVisible(true);
+    }
+}
